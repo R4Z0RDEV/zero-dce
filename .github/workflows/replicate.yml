@@ -42,4 +42,4 @@ jobs:
       # 4. 배포 (모델 이름 확인!)
       - name: Push to Replicate
         run: |
-          cog push r8.im/r4z0rdev/zero-dce-model
+          cog push r8.im/r4z0rdev/zero-dce-v2
