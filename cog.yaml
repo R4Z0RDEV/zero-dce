@@ -1,10 +1,14 @@
 build:
   gpu: true
-  python_version: "3.9"   <-- 여기를 3.8에서 3.9로 변경!
+  python_version: "3.8"
   system_packages:
     - "libgl1-mesa-glx"
     - "libglib2.0-0"
   python_packages:
     - "torch==1.10.0"
     - "torchvision==0.11.0"
-    # (나머지 그대로)
+    - "numpy"
+    - "opencv-python"
+    - "Pillow"
+
+predict: "predict.py:Predictor"
