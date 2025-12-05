@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 1. 용량 확보 (필수)
+      # 1. 용량 확보
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
@@ -26,19 +26,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # [핵심 수정] 복잡한 플러그인(setup-buildx)을 다 빼고,
-      # "기본 도커를 사용해!"라고 강제로 지정합니다.
-      - name: Force Docker default builder
-        run: |
-          docker buildx use default
-
+      # 2. Cog 설치 (이 단계가 빌드 설정을 제멋대로 바꿈)
       - name: Setup Cog
         uses: replicate/setup-cog@v1
         with:
           token: ${{ secrets.REPLICATE_API_TOKEN }}
           install-cuda: false
 
-      # 4. 배포
+      # [핵심 수정] 3. Cog 설치 후에 다시 '기본 모드'로 강제 변경!
+      # 이렇게 해야 Cog가 만든 이미지를 찾을 수 있습니다.
+      - name: Switch to Default Docker Builder
+        run: |
+          docker buildx use default
+
+      # 4. 배포 (모델 이름 확인!)
       - name: Push to Replicate
         run: |
           cog push r8.im/r4z0rdev/zero-dce-model
