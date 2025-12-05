@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # [핵심] 1. 빌드 시작 전, 불필요한 파일 삭제로 용량 30GB 확보
+      # 1. 용량 확보 (이거 덕분에 빌드 성공함!)
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
@@ -32,6 +32,12 @@ jobs:
           token: ${{ secrets.REPLICATE_API_TOKEN }}
           install-cuda: false
 
+      # [NEW] 2. 이미지를 숨기지 않도록 '기본 드라이버'로 설정 변경
+      - name: Configure Docker Builder
+        run: |
+          docker buildx create --use --driver=docker
+
+      # 3. 배포 (모델 이름 확인 필수!)
       - name: Push to Replicate
         run: |
           cog push r8.im/r4z0rdev/zero-dce-model
