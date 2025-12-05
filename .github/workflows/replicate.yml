@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'README.md'  # 문서 수정할 때는 빌드 안 하도록 설정 (시간 절약)
 
 jobs:
   build:
@@ -17,6 +19,7 @@ jobs:
         with:
           token: ${{ secrets.REPLICATE_API_TOKEN }}
 
+      # 여기가 핵심! 빌드 및 푸시 명령만 있으면 됩니다.
       - name: Push to Replicate
         run: |
-          cog push r8.im/r4z0rdev/zero-dce-model
+          cog push r8.im/r4z0rdev/zero-dce
