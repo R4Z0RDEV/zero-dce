@@ -1,12 +1,13 @@
 build:
   gpu: true
-  python_version: "3.8"
+  cuda: "11.8"        # 중요: 11.1은 너무 구형이라 거부당함 -> 11.8로 변경
+  python_version: "3.9"
   system_packages:
     - "libgl1-mesa-glx"
     - "libglib2.0-0"
   python_packages:
-    - "torch==1.10.0"
-    - "torchvision==0.11.0"
+    - "torch==2.0.1"  # 파이토치도 최신 버전으로 올림
+    - "torchvision==0.15.2"
     - "numpy"
     - "opencv-python"
     - "Pillow"
